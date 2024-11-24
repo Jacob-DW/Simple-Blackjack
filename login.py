@@ -1,11 +1,53 @@
 import sqlite3
 import time
+import tkinter
+from tkinter import *
+import tkinter as tk
+import maingui
+from maingui import *
+
+
+
+
+
+
+
+
 
 
 def login():
-  while True:
-    username = input("Enter your username: ")
-    password = input("Enter your password: ")
+
+  #need to create a new gui window for then login menu
+  login_frame = tk.Toplevel()
+  login_frame.title("Login")
+  login_frame.geometry("1000x800")
+
+  #makes the gui auto open on full screen
+  login_frame.attributes("-fullscreen", True)
+
+  newusertext=tk.Label(login_frame, text="Login to your account", font=('Times', 24))
+  newusertext.pack(pady=5)
+
+  
+  #username
+  usernametext=tk.Label(login_frame, text="Enter username", font=('Times', 18))
+  usernametext.pack(pady=15)
+    
+  usernametextbox=tk.Entry(login_frame)
+  usernametextbox.pack(pady=5)
+
+  #password
+  passwordtext=tk.Label(login_frame, text="Enter password",font=('Times', 18))
+  passwordtext.pack(pady=5)
+    
+  passwordtextbox=tk.Entry(login_frame)
+  passwordtextbox.pack(pady=5)
+   
+  def textboxvalue():
+    login_button.config(state=tk.DISABLED)
+    login_button.after(3000, lambda: login_button.config(state=tk.NORMAL))
+    username = usernametextbox.get()
+    password = passwordtextbox.get()
 
     with sqlite3.connect("database.db") as db:
       cursor = db.cursor()
@@ -14,41 +56,132 @@ def login():
     results = cursor.fetchall()
 
     if results:
-      for i in results:
-        print("Welcome ",i[2])
-        return(i[0])
+      correctlogin=tk.Label(login_frame, text="Welcome", font=('Times', 18))
+      correctlogin.pack(pady=5)
+      login_frame.after(3000, lambda : login_frame.destroy())
     else:
-      print("Username and password not recognised")
-      again = input("Do you want to retry (Y/N) ")
-      if again.lower() == "n":
-        print("Goodbye")
-        time.sleep(1)
-        return("exit")
+      incorrectlogin=tk.Label(login_frame, text="Username and password not recognised", font=('Times', 18))
+      incorrectlogin.pack(pady=5)
+      login_frame.after(2000, incorrectlogin.destroy)
+
+
+  login_button=tk.Button(login_frame, text="Login", command=textboxvalue)
+  login_button.pack(pady=20)
+  #special animations when the buttons are hovered over
+  login_button.config(cursor="hand2")
+  login_button.bind("<Enter>", lambda e: login_button.config(bg="grey"))
+  login_button.bind("<Leave>", lambda e: login_button.config(bg="white"))
+
+
+
+
+
 
 
 def newUser():
-  print("Add new user")
-  found = 0
-  while found == 0:
-    username = input("Enter a username: ")
+
+  #need to create a new gui window for then new user menu
+  newuser_frame = tk.Toplevel()
+  newuser_frame.title("New User")
+  newuser_frame.geometry("1000x800")
+
+
+ #makes the gui auto open on full screen
+  newuser_frame.attributes("-fullscreen", True)
+
+  newusertext=tk.Label(newuser_frame, text="Add new user", font=('Times', 24))
+  newusertext.pack(pady=5)
+
+  #username
+  usernametext=tk.Label(newuser_frame, text="Enter username", font=('Times', 18))
+  usernametext.pack(pady=5)
+    
+  usernametextbox=tk.Entry(newuser_frame)
+  usernametextbox.pack(pady=5)
+
+#firstname
+  firstnametext=tk.Label(newuser_frame, text="Enter firstname", font=('Times', 18))
+  firstnametext.pack(pady=5)
+    
+  fistnametextbox=tk.Entry(newuser_frame)
+  fistnametextbox.pack(pady=5)
+
+#surname
+  surnametext=tk.Label(newuser_frame, text="Enter surname", font=('Times', 18))
+  surnametext.pack(pady=5)
+    
+  surnametextbox=tk.Entry(newuser_frame)
+  surnametextbox.pack(pady=5)
+
+#password
+  passwordtext=tk.Label(newuser_frame, text="Enter password", font=('Times', 18))
+  passwordtext.pack(pady=5)
+    
+  passwordtextbox=tk.Entry(newuser_frame)
+  passwordtextbox.pack(pady=5)
+
+#password again
+  password1text=tk.Label(newuser_frame, text="Enter password again", font=('Times', 18))
+  password1text.pack(pady=5)
+    
+  password1textbox=tk.Entry(newuser_frame)
+  password1textbox.pack(pady=5)
+
+
+  def textboxvalue():
+    username = usernametextbox.get()
+    firstname = fistnametextbox.get()
+    surname = surnametextbox.get()
+    password = passwordtextbox.get()
+    password1 = password1textbox.get()
+
+
+    save_button.config(state=tk.DISABLED)
+    save_button.after(3000, lambda: save_button.config(state=tk.NORMAL))
+
     with sqlite3.connect("database.db") as db:
       cursor = db.cursor()
     find_user = ('SELECT * FROM user WHERE username = ?')
     cursor.execute(find_user,[(username)])
 
     if cursor.fetchall():
-      print("username taken")
+      usernametaken=tk.Label(newuser_frame, text="Username taken", font=('Times', 18))
+      usernametaken.pack(pady=5)
+      newuser_frame.after(2000, usernametaken.destroy)
+      return
+
+    if password != password1:
+      passworderror=tk.Label(newuser_frame, text="Passwords dont match", font=('Times', 18))
+      passworderror.pack(pady=5)
+      newuser_frame.after(2000, passworderror.destroy)
+      return
+    
     else:
-      found=1
+      insertData = '''INSERT INTO user(username,firstname,surname,password) VALUES(?,?,?,?)'''
+      cursor.execute(insertData,[(username), (firstname), (surname), (password)])
+      db.commit()
+      accountcreated=tk.Label(newuser_frame, text="Account Created", font=('Times', 18))
+      accountcreated.pack(pady=5)
+      newuser_frame.after(3000, lambda : newuser_frame.destroy())
 
-    firstname = input("Please enter you firstname: ")
-    surname = input("Please enter you surname: ")
-    password = input("Please enter you password: ")
-    password1 = input("Please enter you password again: ")
-    while password != password1:
-      print("Passwords did not match")
-      password=input("Please enter you password: ")
-      password1=input("Please enter you password again: ")
+  save_button=tk.Button(newuser_frame, text="Save", command=textboxvalue)
+  save_button.pack(pady=20)
+  #special animations when the buttons are hovered over
+  save_button.config(cursor="hand2")
+  save_button.bind("<Enter>", lambda e: save_button.config(bg="grey"))
+  save_button.bind("<Leave>", lambda e: save_button.config(bg="white"))
+  
 
-    insertData = '''INSERT INTO user(username,firstname,surname,password) VALUES(?,?,?,?)'''
-    cursor.execute(insertData,[(username), (firstname), (surname), (password)])
+
+
+
+
+
+
+
+
+
+
+
+
+
