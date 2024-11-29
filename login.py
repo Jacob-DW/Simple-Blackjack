@@ -17,6 +17,16 @@ from maingui import *
 
 def login():
 
+  #binds the escape button to close the window
+  def login_exit_click(event=None):
+    login_frame = event.widget
+    try:
+      login_frame.destroy()
+    except tk.TclError:
+      pass
+    
+  root.bind('<Escape>', login_exit_click)
+
   #need to create a new gui window for then login menu
   login_frame = tk.Toplevel()
   login_frame.title("Login")
@@ -40,7 +50,7 @@ def login():
   passwordtext=tk.Label(login_frame, text="Enter password",font=('Times', 18))
   passwordtext.pack(pady=5)
     
-  passwordtextbox=tk.Entry(login_frame)
+  passwordtextbox=tk.Entry(login_frame, show = '*')
   passwordtextbox.pack(pady=5)
    
   def textboxvalue():
@@ -55,15 +65,21 @@ def login():
     cursor.execute(find_user,[(username),(password)])
     results = cursor.fetchall()
 
-    if results:
-      correctlogin=tk.Label(login_frame, text="Welcome", font=('Times', 18))
-      correctlogin.pack(pady=5)
-      login_frame.after(3000, lambda : login_frame.destroy())
-    else:
-      incorrectlogin=tk.Label(login_frame, text="Username and password not recognised", font=('Times', 18))
-      incorrectlogin.pack(pady=5)
-      login_frame.after(2000, incorrectlogin.destroy)
+    if not username or not password:
+      fieldserror=tk.Label(login_frame, text="All fields are requried to login", font=('Times', 18))
+      fieldserror.pack(pady=5)
+      login_frame.after(2000, fieldserror.destroy)
 
+    else:
+      if results:
+        correctlogin=tk.Label(login_frame, text="Welcome", font=('Times', 18))
+        correctlogin.pack(pady=5)
+        login_frame.after(3000, lambda : login_frame.destroy())
+
+      else:
+        incorrectlogin=tk.Label(login_frame, text="Username and password not recognised", font=('Times', 18))
+        incorrectlogin.pack(pady=5)
+        login_frame.after(2000, incorrectlogin.destroy)
 
   login_button=tk.Button(login_frame, text="Login", command=textboxvalue)
   login_button.pack(pady=20)
@@ -77,13 +93,65 @@ def login():
 
 
 
-
 def newUser():
+
+  def textboxvalue():
+    username = usernametextbox.get()
+    firstname = fistnametextbox.get()
+    surname = surnametextbox.get()
+    password = passwordtextbox.get()
+    password1 = password1textbox.get()
+
+    save_button.config(state=tk.DISABLED)
+    save_button.after(3000, lambda: save_button.config(state=tk.NORMAL))
+
+    with sqlite3.connect("database.db") as db:
+      cursor = db.cursor()
+    find_user = ('SELECT * FROM user WHERE username = ?')
+    cursor.execute(find_user,[(username)])
+
+    if cursor.fetchall():
+      usernametaken=tk.Label(newuser_frame, text="Username taken", font=('Times', 18))
+      usernametaken.pack(pady=5)
+      newuser_frame.after(2000, usernametaken.destroy)
+      return
+
+    if password != password1:
+      passworderror=tk.Label(newuser_frame, text="Passwords dont match", font=('Times', 18))
+      passworderror.pack(pady=5)
+      newuser_frame.after(2000, passworderror.destroy)
+      return
+    
+    if not username or not firstname or not surname or not password or not password1:
+      fieldserror=tk.Label(newuser_frame, text="All fields are requried to save", font=('Times', 18))
+      fieldserror.pack(pady=5)
+      newuser_frame.after(2000, fieldserror.destroy)
+
+    else:
+      insertData = '''INSERT INTO user(username,firstname,surname,password) VALUES(?,?,?,?)'''
+      cursor.execute(insertData,[(username), (firstname), (surname), (password)])
+      db.commit()
+      accountcreated=tk.Label(newuser_frame, text="Account Created", font=('Times', 18))
+      accountcreated.pack(pady=5)
+      newuser_frame.after(3000, lambda : newuser_frame.destroy())
+
+
+
+
+  #binds the escape button to close the window
+  def newuser_exit_click(event=None):
+    newuser_frame = event.widget
+    try:
+      newuser_frame.destroy()
+    except tk.TclError:
+      pass
+
+  root.bind('<Escape>', newuser_exit_click)
 
   #need to create a new gui window for then new user menu
   newuser_frame = tk.Toplevel()
   newuser_frame.title("New User")
-  newuser_frame.geometry("1000x800")
+  newuser_frame.geometry("3000x1800")
 
 
  #makes the gui auto open on full screen
@@ -117,59 +185,31 @@ def newUser():
   passwordtext=tk.Label(newuser_frame, text="Enter password", font=('Times', 18))
   passwordtext.pack(pady=5)
     
-  passwordtextbox=tk.Entry(newuser_frame)
+  passwordtextbox=tk.Entry(newuser_frame, show = "*")
   passwordtextbox.pack(pady=5)
 
 #password again
   password1text=tk.Label(newuser_frame, text="Enter password again", font=('Times', 18))
   password1text.pack(pady=5)
     
-  password1textbox=tk.Entry(newuser_frame)
+  password1textbox=tk.Entry(newuser_frame, show = "*")
   password1textbox.pack(pady=5)
 
 
-  def textboxvalue():
-    username = usernametextbox.get()
-    firstname = fistnametextbox.get()
-    surname = surnametextbox.get()
-    password = passwordtextbox.get()
-    password1 = password1textbox.get()
-
-
-    save_button.config(state=tk.DISABLED)
-    save_button.after(3000, lambda: save_button.config(state=tk.NORMAL))
-
-    with sqlite3.connect("database.db") as db:
-      cursor = db.cursor()
-    find_user = ('SELECT * FROM user WHERE username = ?')
-    cursor.execute(find_user,[(username)])
-
-    if cursor.fetchall():
-      usernametaken=tk.Label(newuser_frame, text="Username taken", font=('Times', 18))
-      usernametaken.pack(pady=5)
-      newuser_frame.after(2000, usernametaken.destroy)
-      return
-
-    if password != password1:
-      passworderror=tk.Label(newuser_frame, text="Passwords dont match", font=('Times', 18))
-      passworderror.pack(pady=5)
-      newuser_frame.after(2000, passworderror.destroy)
-      return
-    
-    else:
-      insertData = '''INSERT INTO user(username,firstname,surname,password) VALUES(?,?,?,?)'''
-      cursor.execute(insertData,[(username), (firstname), (surname), (password)])
-      db.commit()
-      accountcreated=tk.Label(newuser_frame, text="Account Created", font=('Times', 18))
-      accountcreated.pack(pady=5)
-      newuser_frame.after(3000, lambda : newuser_frame.destroy())
-
-  save_button=tk.Button(newuser_frame, text="Save", command=textboxvalue)
-  save_button.pack(pady=20)
+  save_button=tk.Button(newuser_frame, text="Save", command=textboxvalue, bg="white")
+  save_button.pack(pady=30)
   #special animations when the buttons are hovered over
   save_button.config(cursor="hand2")
   save_button.bind("<Enter>", lambda e: save_button.config(bg="grey"))
   save_button.bind("<Leave>", lambda e: save_button.config(bg="white"))
+
+
+
+
+
+  
+
+  
   
 
 
