@@ -65,16 +65,29 @@ def login():
     cursor.execute(find_user,[(username),(password)])
     results = cursor.fetchall()
 
+
+
     if not username or not password:
       fieldserror=tk.Label(login_frame, text="All fields are requried to login", font=('Times', 18))
       fieldserror.pack(pady=5)
       login_frame.after(2000, fieldserror.destroy)
 
     else:
+
       if results:
-        correctlogin=tk.Label(login_frame, text="Welcome", font=('Times', 18))
+        correctlogin=tk.Label(login_frame, text="Welcome, you have a currency of:", font=('Times', 18))
         correctlogin.pack(pady=5)
         login_frame.after(3000, lambda : login_frame.destroy())
+
+        #function to find out how much currency user has and displays
+      with sqlite3.connect("database.db") as db:
+        cursor = db.cursor()
+      cursor.execute(f'SELECT currency FROM user WHERE username = {username}')
+      result = cursor.fetchall()  
+      if result:
+          currency = result[0] 
+          currencylabel=tk.Label(login_frame, text=currency,font=('Times', 18))
+          currencylabel.pack(pady=5)
 
       else:
         incorrectlogin=tk.Label(login_frame, text="Username and password not recognised", font=('Times', 18))

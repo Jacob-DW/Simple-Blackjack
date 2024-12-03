@@ -1,13 +1,14 @@
 import sqlite3
 import login
-#from login import *
 import newdatabase
 import os
 import tkinter
+import leaderboard
 from tkinter import *
 import tkinter as tk
 import maingui
 from maingui import *
+
 
 
 #3 functions linking the click of the button to funcitons
@@ -18,6 +19,8 @@ def login_click():
 def user_click():
   login.login()
 
+def leaderboard_click():
+  leaderboard.leaderboard()
 
 #binds the escape button to close the window
 def main_exit_click(event=None):
@@ -70,13 +73,20 @@ tutorial_button.config(cursor="hand2")
 tutorial_button.bind("<Enter>", lambda e: tutorial_button.config(bg="grey"))
 tutorial_button.bind("<Leave>", lambda e: tutorial_button.config(bg="white"))
 
+
+
+
 #create leaderbaord button on menu screen
-leaderboard_button=tk.Button(main_menu_frame, text="Leaderboard", width=20, height=10,font=('Times', 14), bg="white")
+leaderboard_button=tk.Button(main_menu_frame, command=leaderboard_click, text="Leaderboard", width=20, height=10,font=('Times', 14), bg="white")
 leaderboard_button.place(x=1600, y=400)
 #special animations when the buttons are hovered over
 leaderboard_button.config(cursor="hand2")
 leaderboard_button.bind("<Enter>", lambda e: leaderboard_button.config(bg="grey"))
 leaderboard_button.bind("<Leave>", lambda e: leaderboard_button.config(bg="white"))
+
+
+
+
 
 #create settings button on menu screen
 settings_button=tk.Button(main_menu_frame, text="Settings", width=20, height=10,font=('Times', 14), bg="white")
