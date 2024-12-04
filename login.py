@@ -71,6 +71,7 @@ def login():
       fieldserror=tk.Label(login_frame, text="All fields are requried to login", font=('Times', 18))
       fieldserror.pack(pady=5)
       login_frame.after(2000, fieldserror.destroy)
+      
 
     else:
 
@@ -78,6 +79,7 @@ def login():
         correctlogin=tk.Label(login_frame, text="Welcome, you have a currency of:", font=('Times', 18))
         correctlogin.pack(pady=5)
         login_frame.after(3000, lambda : login_frame.destroy())
+        test=True
 
         #function to find out how much currency user has and displays
       with sqlite3.connect("database.db") as db:
@@ -100,6 +102,8 @@ def login():
   login_button.config(cursor="hand2")
   login_button.bind("<Enter>", lambda e: login_button.config(bg="grey"))
   login_button.bind("<Leave>", lambda e: login_button.config(bg="white"))
+ 
+  return test
 
 
 
@@ -215,26 +219,6 @@ def newUser():
   save_button.config(cursor="hand2")
   save_button.bind("<Enter>", lambda e: save_button.config(bg="grey"))
   save_button.bind("<Leave>", lambda e: save_button.config(bg="white"))
-
-
-
-
-
-  
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
 
 
 

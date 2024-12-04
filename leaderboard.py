@@ -20,32 +20,29 @@ def leaderboard():
 
     with sqlite3.connect("database.db") as db:
         cursor = db.cursor()
-        cursor.execute('SELECT username FROM user ORDER BY currency DESC LIMIT 5')
+        cursor.execute('SELECT username, currency FROM user ORDER BY currency DESC LIMIT 5')
         #saves all leaderbaord position in seperate variables
-        result = cursor.fetchone()  
-        result1 = cursor.fetchone()  
-        result2 = cursor.fetchone()  
-        result3 = cursor.fetchone()  
-        result4 = cursor.fetchone()  
+        results=[]
+        for i in range (0, 5):          
+          result = cursor.fetchone()
+          results.append(result)  
+  
 
-    title=tk.Label(leaderboard_frame, text="Leaderboard", font=('Times', 54))
+        
+    title=tk.Label(leaderboard_frame, text="Leaderboard", font=('Times', 84))
     title.pack()
+    
+    position=["1.     ","2.     ","3.     ","4.     ","5.     "]
 
-    resultpos=tk.Label(leaderboard_frame, text="1", font=('Times', 18))
-    resultpos.pack(padx=500)
+    for j in range (0, 5):
+        #create a new fram e for each row so it can be placed side by side
+      row_frame = tk.Frame(leaderboard_frame)
+      row_frame.pack(pady=15)
+      
+      resultpos=tk.Label(row_frame, text=position[j], font=('Times', 18))
+      resultpos.pack(side="left")
 
-    result=tk.Label(leaderboard_frame, text=result, font=('Times', 18))
-    result.pack(pady=15)
+      result=tk.Label(row_frame, text=results[j], font=('Times', 18))
+      result.pack(pady=15)
 
-    result1=tk.Label(leaderboard_frame, text=result1, font=('Times', 18))
-    result1.pack(pady=15)
 
-    result2=tk.Label(leaderboard_frame, text=result2, font=('Times', 18))
-    result2.pack(pady=15)
-
-    result3=tk.Label(leaderboard_frame, text=result3, font=('Times', 18))
-    result3.pack(pady=15)
-
-    result4=tk.Label(leaderboard_frame, text=result4, font=('Times', 18))
-    result4.pack(pady=15)
-       

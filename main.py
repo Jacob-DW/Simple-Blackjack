@@ -8,6 +8,7 @@ from tkinter import *
 import tkinter as tk
 import maingui
 from maingui import *
+from login import *
 
 
 
@@ -60,10 +61,22 @@ newuser_button.config(cursor="hand2")
 newuser_button.bind("<Enter>", lambda e: newuser_button.config(bg="grey"))
 newuser_button.bind("<Leave>", lambda e: newuser_button.config(bg="white"))
 
+
+
+
+
+if test==True:
 #create games button on menu screen
-games_button=tk.Button(main_menu_frame, text="Games", width=20, height=10,font=('Times', 14), bg="white")
-games_button.config(text="Games", state="disabled", bg="gray")
-games_button.place(x=1600, y=100)
+  games_button=tk.Button(main_menu_frame, text="Games", width=20, height=10,font=('Times', 14), bg="white")
+  games_button.config(text="Games", state="disabled", bg="gray")
+  games_button.place(x=1600, y=100)
+
+
+
+
+
+
+
 
 #create tutorial button on menu screen
 tutorial_button=tk.Button(main_menu_frame, text="Tutorial", width=20, height=10,font=('Times', 14), bg="white")
@@ -74,8 +87,6 @@ tutorial_button.bind("<Enter>", lambda e: tutorial_button.config(bg="grey"))
 tutorial_button.bind("<Leave>", lambda e: tutorial_button.config(bg="white"))
 
 
-
-
 #create leaderbaord button on menu screen
 leaderboard_button=tk.Button(main_menu_frame, command=leaderboard_click, text="Leaderboard", width=20, height=10,font=('Times', 14), bg="white")
 leaderboard_button.place(x=1600, y=400)
@@ -83,9 +94,6 @@ leaderboard_button.place(x=1600, y=400)
 leaderboard_button.config(cursor="hand2")
 leaderboard_button.bind("<Enter>", lambda e: leaderboard_button.config(bg="grey"))
 leaderboard_button.bind("<Leave>", lambda e: leaderboard_button.config(bg="white"))
-
-
-
 
 
 #create settings button on menu screen
