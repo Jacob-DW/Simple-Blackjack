@@ -5,10 +5,11 @@ from tkinter import *
 import tkinter as tk
 import maingui
 from maingui import *
+import blackjack
 
 
-
-
+def blackjack_click():
+  blackjack.cards()
 
 
 
@@ -78,8 +79,17 @@ def login():
       if results:
         correctlogin=tk.Label(login_frame, text="Welcome, you have a currency of:", font=('Times', 18))
         correctlogin.pack(pady=5)
-        login_frame.after(3000, lambda : login_frame.destroy())
-        test=True
+        #NEEDS TO BE CHANGED TO 3000 ISH ONCE TESTING IS DONE
+        login_frame.after(1000, lambda : login_frame.destroy())
+
+        #create new enables instance of games button once user logs in
+        games_button1=tk.Button(root, text="Games", command=blackjack_click ,width=20, height=10,font=('Times', 14), bg="white")
+        games_button1.config(text="Games", bg="White")
+        games_button1.place(x=800, y=100) #x=1600 once off lapotp
+        games_button1.config(cursor="hand2")
+        games_button1.bind("<Enter>", lambda e: games_button1.config(bg="grey"))
+        games_button1.bind("<Leave>", lambda e: games_button1.config(bg="white"))
+        
 
         #function to find out how much currency user has and displays
       with sqlite3.connect("database.db") as db:
@@ -103,7 +113,6 @@ def login():
   login_button.bind("<Enter>", lambda e: login_button.config(bg="grey"))
   login_button.bind("<Leave>", lambda e: login_button.config(bg="white"))
  
-  return test
 
 
 
