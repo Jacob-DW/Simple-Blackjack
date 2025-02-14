@@ -8,11 +8,11 @@ from tkinter import *
 import tkinter as tk
 import maingui
 from maingui import *
-from login import *
+import settings
+import tutorial
 
 
-
-#3 functions linking the click of the button to funcitons
+# functions linking the click of the button to funcitons
 def login_click():
   login.newUser()
   
@@ -22,6 +22,12 @@ def user_click():
 
 def leaderboard_click():
   leaderboard.leaderboard()
+
+def settings_click():
+  settings.settings()
+
+def tutorial_click():
+  tutorial.tutorial()
 
 #binds the escape button to close the window
 def main_exit_click(event=None):
@@ -62,24 +68,14 @@ newuser_button.bind("<Enter>", lambda e: newuser_button.config(bg="grey"))
 newuser_button.bind("<Leave>", lambda e: newuser_button.config(bg="white"))
 
 
-
-
-
-if test==True:
 #create games button on menu screen
-  games_button=tk.Button(main_menu_frame, text="Games", width=20, height=10,font=('Times', 14), bg="white")
-  games_button.config(text="Games", state="disabled", bg="gray")
-  games_button.place(x=1600, y=100)
-
-
-
-
-
-
+games_button=tk.Button(main_menu_frame, text="Games", width=20, height=10,font=('Times', 14), bg="white")
+games_button.config(text="Games", state="disabled", bg="gray")
+games_button.place(x=1600, y=100)
 
 
 #create tutorial button on menu screen
-tutorial_button=tk.Button(main_menu_frame, text="Tutorial", width=20, height=10,font=('Times', 14), bg="white")
+tutorial_button=tk.Button(main_menu_frame, command=tutorial_click, text="Tutorial", width=20, height=10,font=('Times', 14), bg="white")
 tutorial_button.place(x=100, y=700)
 #special animations when the buttons are hovered over
 tutorial_button.config(cursor="hand2")
@@ -97,7 +93,7 @@ leaderboard_button.bind("<Leave>", lambda e: leaderboard_button.config(bg="white
 
 
 #create settings button on menu screen
-settings_button=tk.Button(main_menu_frame, text="Settings", width=20, height=10,font=('Times', 14), bg="white")
+settings_button=tk.Button(main_menu_frame, command=settings_click, text="Settings", width=20, height=10,font=('Times', 14), bg="white")
 settings_button.place(x=1600, y=700)
 #special animations when the buttons are hovered over
 settings_button.config(cursor="hand2")
