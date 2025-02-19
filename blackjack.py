@@ -4,12 +4,18 @@ import maingui
 from maingui import *
 import random
 #py -m pip install pillow
-from PIL import Image, ImageTk
-
+from PIL import ImageTk, Image
+#pip install pygame
+import pygame
+import os
 
 
 #start by creating a deck of cards
 def cards():
+
+    #making the pygame sound work
+    pygame.mixer.init()
+
 
     def playbuttonclick():
 
@@ -20,7 +26,7 @@ def cards():
 
         #changing the background to the verison where cards are flipped around
         #when on school pc make Jacob to VMUser2
-        bg_image1 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - start game.png").resize((1600, 900))
+        bg_image1 = Image.open(r"C://Users//VMUser2//Downloads//blackjack bg - start game.png").resize((1600, 900))
         bg_photo1 = ImageTk.PhotoImage(bg_image1)  #make it so tkinter can understand so i can go as a label
         blackjack_canvas.bg_photo1 = bg_photo1
         blackjack_canvas.create_image(0, 0, image=bg_photo1, anchor=tk.NW)
@@ -125,7 +131,8 @@ def cards():
 
         #linking cards with their values by using a data dictionary
         ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
-        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        #suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        suits = ["Hearts"]
         values = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
         #creates o deck of cards where values of linked
@@ -150,103 +157,122 @@ def cards():
         blackjack_canvas.create_window(400, 100, window=player_card_label_2)
         del deck[player_card_2]
 
+        #making a list to store the images in so tgey dont get removed
+        
+        suitimages=[]  
 
         #puts a picture of the suit and the rank e.g 1,2,J on the first card spot
-        if "Hearts" in player_card_1:
+        #player_card_1=str(player_card_1)
+        print(player_card_1)
+        text=player_card_1.split(" ")
+        if "Hearts" in text:
+
+            print("Hearts")
+
+            cardrank1=player_card_1.split()[0]
+            cardrank1_label=tk.Label(blackjack_frame, text=cardrank1, width=7, height=7, font=('Times', 24), bg="white")
+            blackjack_canvas.create_window(650, 750, window=cardrank1_label)
+
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((100,100))
+            bg_photo1 = ImageTk.PhotoImage(bg_image1)
+            blackjack_canvas.create_image(650, 750, image=bg_photo1, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo1
+
+
+            #making a flipping sound when cards are given out
+            #sound=pygame.mixer.Sound("C://Users//VMUser2//Downloads//card-flip.mp3")
+            #sound.play()
             
-            cardrank1=player_card_1.split()[0]
-            cardrank1_label=tk.Label(blackjack_frame, text=cardrank1, width=7, height=7, font=('Times', 24), bg="white")
-            blackjack_canvas.create_window(650, 750, window=cardrank1_label)
+        if "Diamonds" in text:
+            print("Diamonds")
 
-            #create symbol for each suit to place onto card
-            suits_image1 = Image.open(r"C:/Users/Jacob/Downloads/blackjack hearts.png").resize((60, 60))
-            suits_photo1 = ImageTk.PhotoImage(suits_image1)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.suits_photo1 = suits_photo1
-            blackjack_canvas.create_image(650, 725, image=suits_photo1, anchor=tk.NW)
-
-        if "Diamonds" in player_card_1:
 
             cardrank1=player_card_1.split()[0]
             cardrank1_label=tk.Label(blackjack_frame, text=cardrank1, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(650, 750, window=cardrank1_label)
             
             #create symbol for each suit to place onto card
-            suits_image1 = Image.open(r"C:/Users/Jacob/Downloads/blackjack diamonds.png").resize((60, 60))
-            suits_photo1 = ImageTk.PhotoImage(suits_image1)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.suits_photo1 = suits_photo1
-            blackjack_canvas.create_image(650, 725, image=suits_photo1, anchor=tk.NW)
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((100,100))
+            bg_photo1 = ImageTk.PhotoImage(bg_image1)
+            blackjack_canvas.create_image(650, 750, image=bg_photo1, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo1
 
-        if "Clubs" in player_card_1:
+        if "Clubs" in text:
+            print("Clubs")
             cardrank1=player_card_1.split()[0]
             cardrank1_label=tk.Label(blackjack_frame, text=cardrank1, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(650, 750, window=cardrank1_label)
 
             #create symbol for each suit to place onto card
-            suits_image1 = Image.open(r"C:/Users/Jacob/Downloads/blackjack clubs.png").resize((60, 60))
-            suits_photo1 = ImageTk.PhotoImage(suits_image1)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.suits_photo1 = suits_photo1
-            blackjack_canvas.create_image(650, 725, image=suits_photo1, anchor=tk.NW)
-            
-        if "Spades" in player_card_1:
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((100,100))
+            bg_photo1 = ImageTk.PhotoImage(bg_image1)
+            blackjack_canvas.create_image(650, 750, image=bg_photo1, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo1
+
+        if "Spades" in text:
+            print("Spades")
 
             cardrank1=player_card_1.split()[0]
             cardrank1_label=tk.Label(blackjack_frame, text=cardrank1, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(650, 750, window=cardrank1_label)
 
             #create symbol for each suit to place onto card
-            suits_image1 = Image.open(r"C:/Users/Jacob/Downloads/blackjack spades.png").resize((60, 60))
-            suits_photo1 = ImageTk.PhotoImage(suits_image1)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.suits_photo1 = suits_photo1
-            blackjack_canvas.create_image(650, 725, image=suits_photo1, anchor=tk.NW)
-
-
-
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((100,100))
+            bg_photo1 = ImageTk.PhotoImage(bg_image1)
+            blackjack_canvas.create_image(650, 750, image=bg_photo1, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo1
 
 
         #puts a picture of the suit and the rank e.g 1,2,J on the second card spot
-        if "Hearts" in player_card_2:
+        text1=player_card_2.split(" ")
+        if "Hearts" in text1:
+            
+            print("Hearts")
 
             cardrank2=player_card_2.split()[0]
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(1000, 750, window=cardrank2_label)
 
-            suits_image2 = Image.open(r"C:/Users/Jacob/Downloads/blackjack hearts.png").resize((60, 60))
-            suits_photo2 = ImageTk.PhotoImage(suits_image2)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.create_image(1000, 725, image=suits_photo2, anchor=tk.NW)
-            blackjack_canvas.suits_photo2 = suits_photo2
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts 1.png")).resize((100,100))
+            bg_photo2 = ImageTk.PhotoImage(bg_image2)
+            blackjack_canvas.create_image(1000, 750, image=bg_photo2, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo2
 
-        if "Diamonds" in player_card_2:
+        if "Diamonds" in text1:
 
             cardrank2=player_card_2.split()[0]
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(1000, 750, window=cardrank2_label)
             
-            suits_image2 = Image.open(r"C:/Users/Jacob/Downloads/blackjack diamonds.png").resize((60, 60))
-            suits_photo2 = ImageTk.PhotoImage(suits_image2)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.create_image(1000, 725, image=suits_photo2, anchor=tk.NW)
-            blackjack_canvas.suits_photo2 = suits_photo2
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((100,100))
+            bg_photo2 = ImageTk.PhotoImage(bg_image2)
+            blackjack_canvas.create_image(1000, 750, image=bg_photo2, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo2
+
     
-        if "Clubs" in player_card_2:
+        if "Clubs" in text1:
 
             cardrank2=player_card_2.split()[0]
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(1000, 750, window=cardrank2_label)
             
-            suits_image2 = Image.open(r"C:/Users/Jacob/Downloads/blackjack clubs.png").resize((60, 60))
-            suits_photo2 = ImageTk.PhotoImage(suits_image2)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.create_image(1000, 725, image=suits_photo2, anchor=tk.NW)
-            blackjack_canvas.suits_photo2 = suits_photo2
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((100,100))
+            bg_photo2 = ImageTk.PhotoImage(bg_image2)
+            blackjack_canvas.create_image(1000, 750, image=bg_photo2, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo2
 
-        if "Spades" in player_card_2:
+
+        if "Spades" in text1:
 
             cardrank2=player_card_2.split()[0]
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=7, height=7, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(1000, 750, window=cardrank2_label)
 
-            suits_image2 = Image.open(r"C:/Users/Jacob/Downloads/blackjack spades.png").resize((60, 60))
-            suits_photo2 = ImageTk.PhotoImage(suits_image2)  #make it so tkinter can understand so i can go as a label
-            blackjack_canvas.create_image(1000, 725, image=suits_photo2, anchor=tk.NW)
-            blackjack_canvas.suits_photo2 = suits_photo2
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((100,100))
+            bg_photo2 = ImageTk.PhotoImage(bg_image2)
+            blackjack_canvas.create_image(1000, 750, image=bg_photo2, anchor=tk.NW)
+            blackjack_canvas.image = bg_photo2
+
 
 
 
@@ -315,7 +341,7 @@ def cards():
     blackjack_canvas=tk.Canvas(blackjack_frame, width=1800, height=1200)
     blackjack_canvas.pack()
 
-    bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack bg - menu.png")).resize((1600,900))
+    bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack bg - menu.png")).resize((1600,900))
     bg_photo1 = ImageTk.PhotoImage(bg_image1)
     blackjack_canvas.create_image(0, 0, image=bg_photo1, anchor=tk.NW)
     blackjack_canvas.image = bg_photo1
