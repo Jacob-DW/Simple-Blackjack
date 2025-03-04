@@ -26,8 +26,8 @@ def cards():
 
         #changing the background to the verison where cards are flipped around
         #when on school pc make Jacob to VMUser2
-        #bg_image1 = Image.open(r"C://Users//VMUser2//Downloads//blackjack bg - start game.png").resize((1600, 900))
-        bg_image1 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - start game.png").resize((1600, 900))
+        bg_image1 = Image.open(r"C://Users//VMUser2//Downloads//blackjack bg - start game.png").resize((1600, 900))
+        #bg_image1 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - start game.png").resize((1600, 900))
         bg_photo1 = ImageTk.PhotoImage(bg_image1)  #make it so tkinter can understand so i can go as a label
         blackjack_canvas.bg_photo1 = bg_photo1
         blackjack_canvas.create_image(0, 0, image=bg_photo1, anchor=tk.NW)
@@ -64,7 +64,7 @@ def cards():
             if cardsvalue > 21:
                 bust_label = tk.Label(blackjack_frame, text="You have gone bust", font=('Times', 18), bg="white")
                 blackjack_canvas.create_window(500, 600, window=bust_label)
-                blackjack_canvas.after(3000, lambda : blackjack_canvas.destroy())
+                #blackjack_canvas.after(3000, lambda : blackjack_canvas.destroy())
             
             return cardsvalue, player_cards
 
@@ -76,11 +76,11 @@ def cards():
             blackjack_canvas.delete("dealer_elements")
 
 
-            bg_image3 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - empty.png").resize((1600, 900))
+            '''bg_image3 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - empty.png").resize((1600, 900))
             bg_photo3 = ImageTk.PhotoImage(bg_image3)  #make it so tkinter can understand so i can go as a label
             blackjack_canvas.bg_photo3 = bg_photo3
             blackjack_canvas.create_image(0, 0, image=bg_photo3, anchor=tk.NW)
-            blackjack_canvas.images.append(bg_photo3)
+            blackjack_canvas.images.append(bg_photo3)'''
 
             dealer_card_2 = random.choice(list(deck.keys()))  
             dealer_card_value_2 = deck[dealer_card_2]   
@@ -93,12 +93,18 @@ def cards():
             dealer_cards.append(dealer_card_value_1)
             dealer_cards.append(dealer_card_value_2)
             dealercardsvalue=sum(dealer_cards)
+
+
+            print(dealer_card_1)
+            print(dealer_card_2)
             
             if dealercardsvalue < 22:
                 while dealercardsvalue < 16 and dealercardsvalue < 22:
                     dealer_card_3 = random.choice(list(deck.keys()))  
+                    print(dealer_card_3)
                     dealer_card_value_3 = deck[dealer_card_3]   
-                    dealer_card_label_3 = tk.Label(blackjack_canvas, text=f"Dealer got: {dealer_card_3}, with a value of {dealer_card_value_3}", font=('Times', 14), bg="white")
+                    dealer_card_label_3 = tk.Label(blackjack_frame, text=f"Dealer got: {dealer_card_3}, with a value of {dealer_card_value_3}", font=('Times', 14), bg="white")
+                    blackjack_canvas.create_window(700, 550, window=dealer_card_label_3)
                     dealer_card_label_3.pack(pady=10)
                     del deck[dealer_card_3]
                     dealer_cards.append(dealer_card_value_3)
@@ -110,25 +116,25 @@ def cards():
                 if cardsvalue == dealercardsvalue:
                     win_screen_draw = tk.Label(blackjack_frame, text="It is a draw", font=('Times', 14), bg="white")
                     blackjack_canvas.create_window(700, 650, window=win_screen_draw)
-                    blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
                     #draw user gets their bet back
                 
                 elif cardsvalue < 22 and cardsvalue > dealercardsvalue:
                     win_screen_win = tk.Label(blackjack_frame, text="Player win", font=('Times', 14), bg="white")
                     blackjack_canvas.create_window(700, 650, window=win_screen_win)
-                    blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
                     #user win - gets their money back and more
                 
                 elif dealercardsvalue < 22 and cardsvalue < dealercardsvalue:
                     win_screen_loss = tk.Label(blackjack_frame, text="Dealer win", font=('Times', 14), bg="white")
                     blackjack_canvas.create_window(700, 650, window=win_screen_loss)
-                    blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
                     #dealer win - user loses money placed in the bet
             
             else:
-                dealer_bust_label = tk.Label(blackjack_frame, text="Dealer has gone bust", font=('Times', 14), bg="white")
+                dealer_bust_label = tk.Label(blackjack_canvas, text="Dealer has gone bust", font=('Times', 14), bg="white")
                 blackjack_canvas.create_window(700, 550, window=dealer_bust_label)
-                blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
                 #bust
 
 
@@ -178,8 +184,8 @@ def cards():
             cardrank1_label=tk.Label(blackjack_frame, text=cardrank1, width=5, height=3, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(640, 730, window=cardrank1_label)
 
-            #bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((100,100))
-            bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack hearts.png")).resize((30,30))
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((30,30))
+            #bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack hearts.png")).resize((30,30))
             bg_photo1 = ImageTk.PhotoImage(bg_image1)
             blackjack_canvas.create_image(540, 600, image=bg_photo1, anchor=tk.NW)
             blackjack_canvas.image = bg_photo1
@@ -197,8 +203,8 @@ def cards():
             blackjack_canvas.create_window(640, 730, window=cardrank1_label)
             
             #create symbol for each suit to place onto card
-            #bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((100,100))
-            bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack diamonds.png")).resize((30,30))
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((30,30))
+            #bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack diamonds.png")).resize((30,30))
             bg_photo1 = ImageTk.PhotoImage(bg_image1)
             blackjack_canvas.create_image(540, 600, image=bg_photo1, anchor=tk.NW)
             blackjack_canvas.image = bg_photo1
@@ -211,8 +217,8 @@ def cards():
             blackjack_canvas.create_window(640, 730, window=cardrank1_label)
 
             #create symbol for each suit to place onto card
-            #bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((100,100))
-            bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack clubs.png")).resize((30,30))
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((30,30))
+            #bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack clubs.png")).resize((30,30))
             bg_photo1 = ImageTk.PhotoImage(bg_image1)
             blackjack_canvas.create_image(540, 600, image=bg_photo1, anchor=tk.NW)
             blackjack_canvas.image = bg_photo1
@@ -226,8 +232,8 @@ def cards():
             blackjack_canvas.create_window(640, 730, window=cardrank1_label)
 
             #create symbol for each suit to place onto card
-            #bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((100,100))
-            bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack spades.png")).resize((30,30))
+            bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((30,30))
+            #bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack spades.png")).resize((30,30))
             bg_photo1 = ImageTk.PhotoImage(bg_image1)
             blackjack_canvas.create_image(540, 600, image=bg_photo1, anchor=tk.NW)
             blackjack_canvas.image = bg_photo1
@@ -245,8 +251,8 @@ def cards():
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=5, height=3, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(960, 730, window=cardrank2_label)
 
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack hearts.png")).resize((30,30))
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack hearts.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 600, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -258,8 +264,8 @@ def cards():
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=5, height=3, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(960, 730, window=cardrank2_label)
             
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack diamonds.png")).resize((30,30))
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack diamonds.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 600, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -272,8 +278,8 @@ def cards():
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=5, height=3, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(960, 730, window=cardrank2_label)
             
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack clubs.png")).resize((30,30))
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack clubs.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 600, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -286,8 +292,8 @@ def cards():
             cardrank2_label=tk.Label(blackjack_frame, text=cardrank2, width=5, height=3, font=('Times', 24), bg="white")
             blackjack_canvas.create_window(960, 730, window=cardrank2_label)
 
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack spades.png")).resize((30,30))
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack spades.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 600, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -300,22 +306,30 @@ def cards():
         dealer_card_value_1 = deck[dealer_card_1]  
         del deck[dealer_card_1] 
 
-        dealer_card_image_1=dealer_card_1.split()[0]
-        dealer_card_image_1=tk.Label(blackjack_frame, text=dealer_card_image_1, width=5, height=3, font=('Times', 24), bg="white")
-        blackjack_canvas.create_window(960, 175, window=dealer_card_image_1)
+
         
-        dealertext=player_card_2.split(" ")
+        dealertext=dealer_card_1.split(" ")
         if "Hearts" in dealertext:
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack hearts.png")).resize((30,30))
+
+            dealer_card_image_1=dealer_card_1.split()[0]
+            dealer_card_image_1=tk.Label(blackjack_frame, text=dealer_card_image_1, width=5, height=3, font=('Times', 24), bg="white")
+            blackjack_canvas.create_window(960, 175, window=dealer_card_image_1)
+
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack hearts.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack hearts.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 60, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
             blackjack_canvas.images.append(bg_photo2)
 
         if "Diamonds" in dealertext:
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack diamonds.png")).resize((30,30))
+
+            dealer_card_image_1=dealer_card_1.split()[0]
+            dealer_card_image_1=tk.Label(blackjack_frame, text=dealer_card_image_1, width=5, height=3, font=('Times', 24), bg="white")
+            blackjack_canvas.create_window(960, 175, window=dealer_card_image_1)
+
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack diamonds.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack diamonds.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 60, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -324,8 +338,12 @@ def cards():
     
         if "Clubs" in dealertext:
         
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack clubs.png")).resize((30,30))
+            dealer_card_image_1=dealer_card_1.split()[0]
+            dealer_card_image_1=tk.Label(blackjack_frame, text=dealer_card_image_1, width=5, height=3, font=('Times', 24), bg="white")
+            blackjack_canvas.create_window(960, 175, window=dealer_card_image_1)
+
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack clubs.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack clubs.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 60, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -333,8 +351,13 @@ def cards():
 
 
         if "Spades" in dealertext:
-            #bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((100,100))
-            bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack spades.png")).resize((30,30))
+
+            dealer_card_image_1=dealer_card_1.split()[0]
+            dealer_card_image_1=tk.Label(blackjack_frame, text=dealer_card_image_1, width=5, height=3, font=('Times', 24), bg="white")
+            blackjack_canvas.create_window(960, 175, window=dealer_card_image_1)
+
+            bg_image2 = Image.open(("C://Users//VMUser2//Downloads//blackjack spades.png")).resize((30,30))
+            #bg_image2 = Image.open(("C://Users//Jacob//Downloads//blackjack spades.png")).resize((30,30))
             bg_photo2 = ImageTk.PhotoImage(bg_image2)
             blackjack_canvas.create_image(850, 60, image=bg_photo2, anchor=tk.NW)
             blackjack_canvas.image = bg_photo2
@@ -397,16 +420,12 @@ def cards():
     blackjack_frame.attributes("-fullscreen", True)
 
 
-    #need to change VMUser with Jacob when on laptop
-    #bg_image1 = ImageTk.PhotoImage(Image.open(("C://Users//Jacob//Downloads//blackjack bg - menu.png")))
-
-
 
     blackjack_canvas=tk.Canvas(blackjack_frame, width=1800, height=1200)
     blackjack_canvas.pack()
 
-    #bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack bg - menu.png")).resize((1600,900))
-    bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack bg - menu.png")).resize((1600,900))
+    bg_image1 = Image.open(("C://Users//VMUser2//Downloads//blackjack bg - menu.png")).resize((1600,900))
+    #bg_image1 = Image.open(("C://Users//Jacob//Downloads//blackjack bg - menu.png")).resize((1600,900))
     bg_photo1 = ImageTk.PhotoImage(bg_image1)
     blackjack_canvas.create_image(0, 0, image=bg_photo1, anchor=tk.NW)
     blackjack_canvas.image = bg_photo1
