@@ -94,17 +94,17 @@ def login():
         #function to find out how much currency user has and displays
       with sqlite3.connect("database.db") as db:
         cursor = db.cursor()
-      cursor.execute(f'SELECT currency FROM user WHERE username = {username}')
-      result = cursor.fetchall()  
-      if result:
-          currency = result[0] 
-          currencylabel=tk.Label(login_frame, text=currency,font=('Times', 18))
-          currencylabel.pack(pady=5)
+        cursor.execute('SELECT currency FROM user WHERE username = ?', (username,))
+        result = cursor.fetchall()  
+        if result:
+            currency = result[0] 
+            currencylabel=tk.Label(login_frame, text=currency,font=('Times', 18))
+            currencylabel.pack(pady=5)
 
-      else:
-        incorrectlogin=tk.Label(login_frame, text="Username and password not recognised", font=('Times', 18))
-        incorrectlogin.pack(pady=5)
-        login_frame.after(2000, incorrectlogin.destroy)
+        else:
+          incorrectlogin=tk.Label(login_frame, text="Username and password not recognised", font=('Times', 18))
+          incorrectlogin.pack(pady=5)
+          login_frame.after(2000, incorrectlogin.destroy)
 
   login_button=tk.Button(login_frame, text="Login", command=textboxvalue)
   login_button.pack(pady=20)

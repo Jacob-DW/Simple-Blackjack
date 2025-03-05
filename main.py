@@ -39,8 +39,6 @@ def main_exit_click(event=None):
 
 root.bind('<Escape>', main_exit_click)
 
-
-
 # Main Menu Frame
 main_menu_frame = tk.Frame(root)
 main_menu_frame.pack(fill="both", expand=True)
@@ -74,15 +72,6 @@ games_button.config(text="Games", state="disabled", bg="gray")
 games_button.place(x=1600, y=100)
 
 
-#create tutorial button on menu screen
-tutorial_button=tk.Button(main_menu_frame, command=tutorial_click, text="Tutorial", width=20, height=10,font=('Times', 14), bg="white")
-tutorial_button.place(x=100, y=700)
-#special animations when the buttons are hovered over
-tutorial_button.config(cursor="hand2")
-tutorial_button.bind("<Enter>", lambda e: tutorial_button.config(bg="grey"))
-tutorial_button.bind("<Leave>", lambda e: tutorial_button.config(bg="white"))
-
-
 #create leaderbaord button on menu screen
 leaderboard_button=tk.Button(main_menu_frame, command=leaderboard_click, text="Leaderboard", width=20, height=10,font=('Times', 14), bg="white")
 leaderboard_button.place(x=1600, y=400)
@@ -99,5 +88,13 @@ settings_button.place(x=1600, y=700)
 settings_button.config(cursor="hand2")
 settings_button.bind("<Enter>", lambda e: settings_button.config(bg="grey"))
 settings_button.bind("<Leave>", lambda e: settings_button.config(bg="white"))
+
+#create tutorial button on menu screen
+tutorial_button=tk.Button(main_menu_frame, command=tutorial_click, text="Tutorial", width=20, height=10,font=('Times', 14), bg="white")
+tutorial_button.place(x=100, y=700)
+#special animations when the buttons are hovered over
+tutorial_button.config(cursor="hand2")
+tutorial_button.bind("<Enter>", lambda e: tutorial_button.config(bg="grey"))
+tutorial_button.bind("<Leave>", lambda e: tutorial_button.config(bg="white"))
 
 root.mainloop()
