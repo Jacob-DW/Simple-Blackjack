@@ -41,6 +41,13 @@ def cards():
         #all function to link to buttons later on in code
         def getextracard1(cardsvalue, limit):
 
+            #starting the logic for the value of Ace e.g 11 or 1
+            if ranks[player_card_1] == "Ace" or ranks[player_card_2] == "Ace":
+                if cardsvalue > 21:
+                    values("Ace") == 1
+
+
+
         # Check if the user has reached the limit of 5 cards
             if limit >= 5:
                 bust_label = tk.Label(blackjack_frame, text="You cannot draw more than 5 cards", font=('Times', 18), bg="white")
@@ -64,7 +71,8 @@ def cards():
             if cardsvalue > 21:
                 bust_label = tk.Label(blackjack_frame, text="You have gone bust", font=('Times', 18), bg="white")
                 blackjack_canvas.create_window(500, 600, window=bust_label)
-                #blackjack_canvas.after(3000, lambda : blackjack_canvas.destroy())
+                blackjack_canvas.after(3000, lambda : blackjack_canvas.destroy())
+                blackjack_frame.after(3000, lambda : blackjack_frame.destroy())
             
             return cardsvalue, player_cards
 
@@ -72,15 +80,14 @@ def cards():
 
 
             global bg_photo1
-            blackjack_canvas.delete("bg_image")
-            blackjack_canvas.delete("dealer_elements")
 
-
-            '''bg_image3 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - empty.png").resize((1600, 900))
+            #bg_image3 = Image.open(r"C://Users//Jacob//Downloads//blackjack bg - empty.png").resize((1600, 900))
+            bg_image3 = Image.open(r"C://Users//VMUser2//Downloads//blackjack bg - empty.png").resize((1600, 900))
             bg_photo3 = ImageTk.PhotoImage(bg_image3)  #make it so tkinter can understand so i can go as a label
             blackjack_canvas.bg_photo3 = bg_photo3
             blackjack_canvas.create_image(0, 0, image=bg_photo3, anchor=tk.NW)
-            blackjack_canvas.images.append(bg_photo3)'''
+            blackjack_canvas.images.append(bg_photo3)
+            #blackjack_canvas.lower(bg_image3)
 
             dealer_card_2 = random.choice(list(deck.keys()))  
             dealer_card_value_2 = deck[dealer_card_2]   
@@ -116,27 +123,35 @@ def cards():
                 if cardsvalue == dealercardsvalue:
                     win_screen_draw = tk.Label(blackjack_frame, text="It is a draw", font=('Times', 14), bg="white")
                     blackjack_canvas.create_window(700, 650, window=win_screen_draw)
-                    #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    blackjack_frame.after(3000, lambda : blackjack_frame.destroy())
                     #draw user gets their bet back
                 
                 elif cardsvalue < 22 and cardsvalue > dealercardsvalue:
                     win_screen_win = tk.Label(blackjack_frame, text="Player win", font=('Times', 14), bg="white")
                     blackjack_canvas.create_window(700, 650, window=win_screen_win)
-                    #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    blackjack_frame.after(3000, lambda : blackjack_frame.destroy())
                     #user win - gets their money back and more
                 
                 elif dealercardsvalue < 22 and cardsvalue < dealercardsvalue:
                     win_screen_loss = tk.Label(blackjack_frame, text="Dealer win", font=('Times', 14), bg="white")
                     blackjack_canvas.create_window(700, 650, window=win_screen_loss)
-                    #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                    blackjack_frame.after(3000, lambda : blackjack_frame.destroy())
                     #dealer win - user loses money placed in the bet
             
             else:
                 dealer_bust_label = tk.Label(blackjack_canvas, text="Dealer has gone bust", font=('Times', 14), bg="white")
                 blackjack_canvas.create_window(700, 550, window=dealer_bust_label)
-                #blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                blackjack_canvas.after(6000, lambda : blackjack_canvas.destroy())
+                blackjack_frame.after(3000, lambda : blackjack_frame.destroy())
                 #bust
 
+
+
+
+        #START OF THE MAIN GAME LOOP
 
 
 
@@ -159,14 +174,10 @@ def cards():
         #gives the player 2 random cards from the deck and removes them from the deck once they have been given so that cards cannot be repeated
         player_card_1 = random.choice(list(deck.keys()))  
         player_card_value_1 = deck[player_card_1]   
-        player_card_label_1 = tk.Label(blackjack_frame, text=f"You got: {player_card_1}, with a value of {player_card_value_1}", font=('Times', 14), bg="white")
-        blackjack_canvas.create_window(400, 50, window=player_card_label_1)
         del deck[player_card_1]
     
         player_card_2 = random.choice(list(deck.keys()))  
         player_card_value_2 = deck[player_card_2]   
-        player_card_label_2 = tk.Label(blackjack_canvas, text=f"You got: {player_card_2}, with a value of {player_card_value_2}", font=('Times', 14), bg="white")
-        blackjack_canvas.create_window(400, 100, window=player_card_label_2)
         del deck[player_card_2]
 
         #making a list to store the images in so tgey dont get removed
@@ -375,10 +386,6 @@ def cards():
         player_cards.append(player_card_value_2)
 
         cardsvalue=sum(player_cards)
-        cardsvalue_label_1 = tk.Label(blackjack_frame, text=f"Your score is: {cardsvalue}", font=('Times', 14), bg="white")
-        blackjack_canvas.create_window(500, 450, window=cardsvalue_label_1)
-        
-
 
         if cardsvalue == 21:
             print("blackjack")
@@ -394,6 +401,8 @@ def cards():
             stick_button.bind("<Leave>", lambda e: stick_button.config(bg="white"))
 
         else:
+            #twist_button1.config(state=tk.DISABLED)
+            #twist_button1.after(3000, lambda: twist_button1.config(state=tk.NORMAL))
             twist_button1 = Button(blackjack_frame, text="Twist", command=lambda: getextracard1(cardsvalue,limit), width=10, height=5, font=('Times', 14), bg="white")
             blackjack_canvas.create_window(1400, 250, window=twist_button1)
             #special animations when the buttons are hovered over
